@@ -1,0 +1,60 @@
+#!/bin/bash 
+
+#----------------------------------------------------------------
+# global variables
+NAUTILUS_SCRIPT_PATH=".local/share/nautilus/scripts"
+EXECUTABLE_BASE_PATH="/bin"
+FAX_PROGRAM=fax_sender_ui.o
+SEPARATOR="********************************"
+CONFIG_PATH="/etc/print2fax/"
+BIN_BASH_FILE_CONTENT="#!/bin/bash"
+SETTINGS_FILE_CONTENT="$FAX_PROGRAM -working-dir=/etc/print2fax/" 
+SEND_2_FAX_CONTENT="$FAX_PROGRAM -show-sender -working-dir=/etc/print2fax/ -file-path"
+MIME_TYPES="application/pdf;application/msword;application/vnd.openxmlformats-officedocument.wordprocessingml.document;image/tiff;image/jpeg;image/png;"
+
+#----------------------------------------------------------------
+# priviliages
+echo $SEPARATOR
+echo "going to create priviliage for the ${FAX_PROGRAM}"
+chmod +x "${EXECUTABLE_BASE_PATH}/${FAX_PROGRAM}"
+chmod 777 $CONFIG_PATH -R 
+
+#----------------------------------------------------------------
+# application launcher
+cat << EOF > /usr/share/applications/print2fax_settings.desktop
+[Desktop Entry]
+Type=Application
+Name=Print2Fax Settings
+GenericName=Fax Senders Settings 
+Comment=Online Fax Sender Settings
+Exec=$SETTINGS_FILE_CONTENT
+Terminal=false
+Icon=printer
+Keywords=Text;fax;print;
+StartupNotify=true
+Categories=Utilities;
+MimeType=$MIME_TYPES
+EOF
+
+#----------------------------------------------------------------
+# right click in nautilus 
+for user in /home/*; do 
+    if [ -d "${user}" ]; then 
+        username=$(basename "${user}")
+        echo "${SEPARATOR}"
+        echo "the path is : $user${NAUTILUS_SCRIPT_PATH}/"
+        echo "the username is : $username"
+
+        filePathSend2Fax="$user/${NAUTILUS_SCRIPT_PATH}/Print2Fax"
+    
+        echo "the Print2Fax folder is : $filePathSend2Fax"
+
+        #create print2Fax
+        echo $BIN_BASH_FILE_CONTENT >$filePathSend2Fax
+        echo "${SEND_2_FAX_CONTENT}=\"\$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS\"">>$filePathSend2Fax
+
+        chown -R $username:$username "$filePathSend2Fax"
+
+        chmod +x "${filePathSend2Fax}"
+    fi
+done    

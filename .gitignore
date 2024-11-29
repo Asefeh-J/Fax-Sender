@@ -1,0 +1,13 @@
+# auto generate files
+bin/
+public/**/*
+vendor/
+build/python/__pycache__/**/*
+.DS_Store
+__debug_bin
+version.txt
+.vscode
+go.sum
+
+# config files
+.prettierrc

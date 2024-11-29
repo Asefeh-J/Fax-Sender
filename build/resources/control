@@ -1,0 +1,5 @@
+Package: #APPNAME#
+Version: 1.0 
+Architecture: #ARCHITECTURE#
+Maintainer: #APPNAME# Team 
+Description: Send Data To Fax Server

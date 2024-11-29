@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#----------------------------------------------------------------
+# global variables
+NAUTILUS_SCRIPT_PATH=".local/share/nautilus/scripts"
+
+echo "*****************************"
+echo "going to cleanup the additional files"
+
+rm -rf  /usr/share/applications/print2fax_settings.desktop
+
+rm -rf /etc/print2fax
+
+for user in /home/*; do 
+    if [ -d "${user}" ]; then 
+        filePathSend2Fax="$user/${NAUTILUS_SCRIPT_PATH}/Print2Fax"
+
+        #remove all settings file
+        rm -rf $filePathSend2Fax
+    fi 
+done 

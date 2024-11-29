@@ -1,5 +1,6 @@
 # auto generate files
 bin/
+docs/
 public/**/*
 vendor/
 build/python/__pycache__/**/*

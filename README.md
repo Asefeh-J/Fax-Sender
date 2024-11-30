@@ -11,6 +11,10 @@ FaxSender is a cross-platform desktop application built with **Go** for the back
 - **API Integration**: The app interacts with external APIs to manage fax sending.
 - **Installer**: The app includes an installer built with **NSIS** for easy installation on Windows.
 
+## User Interface Preview
+### Right-Click to Send Fax
+<img width="746" alt="Screenshot 2024-11-30 at 7 06 30 PM" src="https://github.com/user-attachments/assets/1983f7f8-167c-4881-a1ea-7a4217663d51">
+
 ## Technologies Used
 
 - **Go** (Backend)
